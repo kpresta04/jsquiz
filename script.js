@@ -93,11 +93,11 @@ $(document).ready(function() {
         seconds = diff % 60 | 0;
         timeValue--;
 
-        minutes = minutes < 10 ? "0" + minutes : minutes;
+        // minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
         display.textContent = minutes + ":" + seconds;
-        if (timeValue === -1) {
+        if (timeValue < 0) {
           onCompletion();
         }
 
@@ -140,11 +140,21 @@ $(document).ready(function() {
     }
   }
   function onCompletion() {
-    playSound();
     stopTimer();
-    $("#tomatoRow").append(
-      '<img class="tomatoImage" src="assets/images/tomato1.jpg" />'
-    );
+    $("#display").empty();
+    let timeBonus = 0;
+    if (timeValue > 0) {
+      timeBonus = timeValue;
+      score += timeValue;
+    }
+    let totalScore = $("<h1>");
+    let bonusScore = $("<h4>");
+    $(bonusScore).text(`Time bonus: ${timeBonus}`);
+
+    $(totalScore).text(`Total score: ${score}`);
+    $("#display").append(bonusScore);
+
+    $("#display").append(totalScore);
   }
   function stopTimer() {
     clearInterval(interv);
@@ -154,7 +164,7 @@ $(document).ready(function() {
   //Initialize timer
   //   resetTimer();
   //Start button even
-  document.querySelector("#start-button").addEventListener("click", startTimer);
+  //   document.querySelector("#start-button").addEventListener("click", startTimer);
   //Stop button event
   //Reset button event
   // this.document
@@ -171,11 +181,7 @@ $(document).ready(function() {
       [array[i], array[j]] = [array[j], array[i]];
     }
   }
-  shuffle(questions);
-  //shuffle choices
-  for (let i = 0; i < questions.length; i++) {
-    shuffle(questions[i].choices);
-  }
+
   //   console.log(questions);
   $("#start-button").on("click", startGame);
 
@@ -185,10 +191,10 @@ $(document).ready(function() {
   function generateQuestion(round) {
     //Clear display
     $("#display").empty();
-    console.log(questions[round].title);
+    // console.log(questions[round].title);
 
-    console.log(questions[round].choices);
-    console.log(questions[round].answer);
+    // console.log(questions[round].choices);
+    // console.log(questions[round].answer);
     //Add question title
     let title = $("<h2>");
     $(title).text(questions[round].title);
@@ -216,9 +222,19 @@ $(document).ready(function() {
   }
 
   function startGame() {
+    //shuffle questions
+    shuffle(questions);
+    //shuffle choices
+    for (let i = 0; i < questions.length; i++) {
+      shuffle(questions[i].choices);
+    }
     //reset score and question number first
     questionNumber = 0;
     score = 0;
+
+    //start the timer
+    timeValue = 150;
+    startTimer();
 
     //
 
@@ -231,15 +247,25 @@ $(document).ready(function() {
     // console.log($(btn).text());
     if ($(btn).text() === questions[questionNumber].answer) {
       console.log("correct!");
+      score += 5;
+      console.log(`Score is: ${score}`);
       if (questionNumber < questions.length - 1) {
         questionNumber++;
         generateQuestion(questionNumber);
+      } else {
+        onCompletion();
       }
     } else {
       console.log("incorrect!");
       if (questionNumber < questions.length - 1) {
         questionNumber++;
         generateQuestion(questionNumber);
+        timeValue -= 15;
+        console.log(timeValue);
+        stopTimer();
+        startTimer();
+      } else {
+        onCompletion();
       }
     }
   }
