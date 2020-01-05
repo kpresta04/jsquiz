@@ -91,19 +91,29 @@ $(document).ready(function() {
   //   console.log(questions);
   $("#start-button").on("click", startGame);
 
-  function startGame() {
-    //clear display container
-    $("#display").empty();
-    //add choice buttons
-    console.log(questions[0].choices);
-    console.log(questions[0].answer);
+  let questionNumber = 0;
 
-    let choiceArray = questions[0].choices;
+  function generateQuestion(round) {
+    //Clear display
+    $("#display").empty();
+    console.log(questions[round].title);
+
+    console.log(questions[round].choices);
+    console.log(questions[round].answer);
+    //Add question title
+    let title = $("<h2>");
+    $(title).text(questions[round].title);
+    $("#display").append(title);
+
+    //Add choice buttons
+
+    let choiceArray = questions[round].choices;
     choiceArray.forEach(function(choice) {
       let choiceBtn = $("<button>");
       let rowDiv = $("<div>");
       $(rowDiv).addClass("row");
       $(choiceBtn).text(choice);
+
       //   console.log($(choiceBtn).text());
       $(choiceBtn).on("click", function() {
         checkAnswer(choiceBtn);
@@ -113,15 +123,31 @@ $(document).ready(function() {
 
       $("#display").append(rowDiv);
     });
+    console.log(`Question number: ${round + 1}`);
   }
+
+  function startGame() {
+    //
+
+    generateQuestion(questionNumber);
+  }
+
   function checkAnswer(btn) {
     //user clicked button, check if they are correct
     // console.log("Button pressed");
     // console.log($(btn).text());
-    if ($(btn).text() === questions[0].answer) {
+    if ($(btn).text() === questions[questionNumber].answer) {
       console.log("correct!");
+      if (questionNumber < questions.length - 1) {
+        questionNumber++;
+        generateQuestion(questionNumber);
+      }
     } else {
       console.log("incorrect!");
+      if (questionNumber < questions.length - 1) {
+        questionNumber++;
+        generateQuestion(questionNumber);
+      }
     }
   }
 });
