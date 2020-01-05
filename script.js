@@ -76,6 +76,7 @@ const questions = [
 ];
 
 $(document).ready(function() {
+  let disp = document.querySelector("#timer");
   function shuffle(array) {
     //shuffles questions
     for (let i = array.length - 1; i > 0; i--) {
