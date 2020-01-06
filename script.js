@@ -147,14 +147,24 @@ $(document).ready(function() {
       timeBonus = timeValue;
       score += timeValue;
     }
-    let totalScore = $("<h1>");
+    let totalScore = $("<h4>");
     let bonusScore = $("<h4>");
+    let c_answers = $("<h4>");
     $(bonusScore).text(`Time bonus: ${timeBonus}`);
+    $(c_answers).text(`Correct answers: ${correctAnswers}`);
 
     $(totalScore).text(`Total score: ${score}`);
+    $("#display").append(c_answers);
+
     $("#display").append(bonusScore);
 
     $("#display").append(totalScore);
+    let playButton = $("<button>");
+    let rowDiv = $("<div>");
+    $(rowDiv).addClass("row");
+    $(playButton).text("Play again");
+    $("#display").append(playButton);
+    $(playButton).on("click", startGame);
   }
   function stopTimer() {
     clearInterval(interv);
@@ -187,6 +197,8 @@ $(document).ready(function() {
 
   let questionNumber = 0;
   let score = 0;
+  let correctAnswers = 0;
+  let answerPoints = 20;
 
   function generateQuestion(round) {
     //Clear display
@@ -247,7 +259,8 @@ $(document).ready(function() {
     // console.log($(btn).text());
     if ($(btn).text() === questions[questionNumber].answer) {
       console.log("correct!");
-      score += 5;
+      score += answerPoints;
+      correctAnswers++;
       console.log(`Score is: ${score}`);
       if (questionNumber < questions.length - 1) {
         questionNumber++;
