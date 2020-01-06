@@ -69,7 +69,7 @@ const questions = [
   },
   {
     title:
-      "What is the method in JavaScript used to remove the whitespace at the beginning and end of any string ?",
+      "What is the method in JavaScript used to remove the whitespace at the beginning and end of any string?",
     choices: ["strip()", "trim()", "trimmed()", "stripped()"],
     answer: "trim()"
   }
@@ -96,7 +96,7 @@ $(document).ready(function() {
         // minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        display.textContent = minutes + ":" + seconds;
+        display.textContent = "Time: " + minutes + ":" + seconds;
         if (timeValue < 0) {
           onCompletion();
         }
@@ -172,19 +172,6 @@ $(document).ready(function() {
     running = false;
   }
 
-  //Initialize timer
-  //   resetTimer();
-  //Start button even
-  //   document.querySelector("#start-button").addEventListener("click", startTimer);
-  //Stop button event
-  //Reset button event
-  // this.document
-  //   .querySelector("#resetBtn")
-  //   .addEventListener("click", function() {
-  //     clearInterval(interv);
-  //     resetTimer();
-  //   });
-
   function shuffle(array) {
     //shuffles questions
     for (let i = array.length - 1; i > 0; i--) {
@@ -250,9 +237,26 @@ $(document).ready(function() {
     timeValue = 150;
     startTimer();
 
-    //
+    //Game starts
 
     generateQuestion(questionNumber);
+  }
+
+  function showAnswer(bool) {
+    //Announces to user whether their choice was right or wrong
+    if (bool === true) {
+      console.log("Correct");
+      // $("#bottomRow").empty();
+      $("#announce").text("Correct!");
+      setTimeout(function() {
+        $("#announce").empty();
+      }, 1000);
+    } else {
+      $("#announce").text("Wrong!");
+      setTimeout(function() {
+        $("#announce").empty();
+      }, 1000);
+    }
   }
 
   function checkAnswer(btn) {
@@ -260,7 +264,7 @@ $(document).ready(function() {
     // console.log("Button pressed");
     // console.log($(btn).text());
     if ($(btn).text() === questions[questionNumber].answer) {
-      console.log("correct!");
+      showAnswer(true);
       score += answerPoints;
       correctAnswers++;
       console.log(`Score is: ${score}`);
@@ -271,7 +275,8 @@ $(document).ready(function() {
         onCompletion();
       }
     } else {
-      console.log("incorrect!");
+      showAnswer(false);
+
       if (questionNumber < questions.length - 1) {
         questionNumber++;
         generateQuestion(questionNumber);

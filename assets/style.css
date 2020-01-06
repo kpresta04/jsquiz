@@ -1,5 +1,8 @@
-body {
+body,
+html {
   font-family: "Roboto Mono", monospace;
+  height: 100%;
+  width: 100%;
 }
 button {
   color: white;
@@ -10,4 +13,8 @@ button {
 }
 button:hover {
   background: #9370db;
+}
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
 }
