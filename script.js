@@ -142,6 +142,7 @@ $(document).ready(function() {
   function onCompletion() {
     stopTimer();
     $("#display").empty();
+    $("#timer").empty();
     let timeBonus = 0;
     if (timeValue > 0) {
       timeBonus = timeValue;
@@ -243,6 +244,7 @@ $(document).ready(function() {
     //reset score and question number first
     questionNumber = 0;
     score = 0;
+    correctAnswers = 0;
 
     //start the timer
     timeValue = 150;
@@ -274,9 +276,13 @@ $(document).ready(function() {
         questionNumber++;
         generateQuestion(questionNumber);
         timeValue -= 15;
-        console.log(timeValue);
-        stopTimer();
-        startTimer();
+        if (timeValue < 0) {
+          onCompletion();
+        } else {
+          console.log(timeValue);
+          stopTimer();
+          startTimer();
+        }
       } else {
         onCompletion();
       }
