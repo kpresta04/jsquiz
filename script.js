@@ -77,6 +77,7 @@ const questions = [
 
 $(document).ready(function() {
   let disp = document.querySelector("#timer");
+  let myStorage = window.localStorage;
   var Clock = {
     Timer: function(duration, display) {
       var start = Date.now(),
@@ -142,7 +143,7 @@ $(document).ready(function() {
   function onCompletion() {
     stopTimer();
     $("#display").empty();
-    $("#timer").empty();
+    // $("#timer").empty();
     let timeBonus = 0;
     if (timeValue > 0) {
       timeBonus = timeValue;
@@ -166,6 +167,19 @@ $(document).ready(function() {
     $(playButton).text("Play again");
     $("#display").append(playButton);
     $(playButton).on("click", startGame);
+    $("#store-button").on("click", storeScore);
+  }
+  function storeScore(e) {
+    let initials = document.querySelector("#initials").value;
+    if (initials !== "") {
+      console.log(initials);
+    }
+
+    let scoreObj = {
+      name: initials,
+      score: score
+    };
+    localStorage.setItem("storeObj", JSON.stringify(scoreObj));
   }
   function stopTimer() {
     clearInterval(interv);
