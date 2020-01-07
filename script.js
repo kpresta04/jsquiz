@@ -81,6 +81,8 @@ $(document).ready(function() {
   $("#hsView").on("click", viewHighScores);
 
   function viewHighScores() {
+    stopTimer();
+    $("#timer").empty();
     $("#display").empty();
 
     let getObj = JSON.parse(localStorage.getItem("storeObj"));
