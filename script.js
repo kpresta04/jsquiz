@@ -81,13 +81,31 @@ $(document).ready(function() {
   $("#hsView").on("click", viewHighScores);
 
   function viewHighScores() {
+    $("#display").empty();
+
     let getObj = JSON.parse(localStorage.getItem("storeObj"));
     console.log(getObj);
     if (getObj !== null) {
-      getObj.forEach(function(obj) {
+      //if scores exist, make scores table
+      //sort scores by highest score
+      getObj.sort((a, b) => (a.score < b.score ? 1 : -1));
+      //slice top 3 scores
+      let slicedObj = getObj.slice(0, 3);
+      slicedObj.forEach(function(obj) {
         console.log(obj.name, obj.score);
       });
+    } else {
+      //No scores to display
+      let noScores = $("<h2>");
+      $(noScores).text("No scores to display!");
+      $("#display").append(noScores);
     }
+    let playButton = $("<button>");
+    let rowDiv = $("<div>");
+    $(rowDiv).addClass("row");
+    $(playButton).text("Start Quiz");
+    $("#display").append(playButton);
+    $(playButton).on("click", startGame);
   }
   var Clock = {
     Timer: function(duration, display) {
@@ -216,6 +234,11 @@ $(document).ready(function() {
       // console.log(scoreArray);
       localStorage.setItem("storeObj", JSON.stringify(scoreArray));
     }
+    $("#hrFormRow").empty();
+    $("#announce").text("Score saved!");
+    setTimeout(function() {
+      $("#announce").empty();
+    }, 1000);
   }
   function stopTimer() {
     clearInterval(interv);
