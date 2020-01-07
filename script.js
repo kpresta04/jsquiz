@@ -77,7 +77,6 @@ const questions = [
 
 $(document).ready(function() {
   let disp = document.querySelector("#timer");
-  $("#store-button").on("click", storeScore);
 
   $("#hsView").on("click", viewHighScores);
 
@@ -179,19 +178,29 @@ $(document).ready(function() {
     $(playButton).text("Play again");
     $("#display").append(playButton);
     $(playButton).on("click", startGame);
+    //create initials form
+
+    let ifield = $("<input>");
+    $(ifield).addClass("form-control");
+    $(ifield).attr("id", "initials");
+    $(ifield).attr("placeholder", "Enter initials");
+    $("#hrFormRow").append(ifield);
+
+    //create save button
+
+    let sButton = $("<button>");
+    $(sButton).attr("id", "store-button");
+    $(sButton).text("Save score");
+    $("#hrFormRow").append(sButton);
+    $(sButton).on("click", storeScore);
   }
   function storeScore() {
     let initials = document.querySelector("#initials").value;
     if (initials !== "") {
       let getObj = JSON.parse(localStorage.getItem("storeObj"));
-      console.log(getObj);
       if (getObj !== null) {
         console.log(getObj);
         scoreArray = getObj;
-
-        // getObj.forEach(function(obj) {
-        //   console.log(obj.name, obj.score);
-        // });
       }
       //empty the score object to prevent duplicates being stored
 
@@ -202,9 +211,9 @@ $(document).ready(function() {
         score: score
       };
 
-      console.log(scoreObj);
+      // console.log(scoreObj);
       scoreArray.push(scoreObj);
-      console.log(scoreArray);
+      // console.log(scoreArray);
       localStorage.setItem("storeObj", JSON.stringify(scoreArray));
     }
   }
@@ -266,6 +275,9 @@ $(document).ready(function() {
   }
 
   function startGame() {
+    //empty save bttn row
+
+    $("#hrFormRow").empty();
     //shuffle questions
     shuffle(questions);
     //shuffle choices
