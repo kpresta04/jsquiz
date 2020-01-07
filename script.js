@@ -274,12 +274,13 @@ $(document).ready(function() {
       scoreArray.push(scoreObj);
       // console.log(scoreArray);
       localStorage.setItem("storeObj", JSON.stringify(scoreArray));
+
+      $("#hrFormRow").empty();
+      $("#announce").text("Score saved!");
+      setTimeout(function() {
+        $("#announce").empty();
+      }, 1000);
     }
-    $("#hrFormRow").empty();
-    $("#announce").text("Score saved!");
-    setTimeout(function() {
-      $("#announce").empty();
-    }, 1000);
   }
   function stopTimer() {
     clearInterval(interv);
