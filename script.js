@@ -169,7 +169,7 @@ $(document).ready(function() {
     $(playButton).on("click", startGame);
     $("#store-button").on("click", storeScore);
   }
-  function storeScore(e) {
+  function storeScore() {
     let initials = document.querySelector("#initials").value;
     if (initials !== "") {
       console.log(initials);
