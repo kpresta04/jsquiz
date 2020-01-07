@@ -86,13 +86,51 @@ $(document).ready(function() {
     let getObj = JSON.parse(localStorage.getItem("storeObj"));
     console.log(getObj);
     if (getObj !== null) {
-      //if scores exist, make scores table
+      //if scores exist,
       //sort scores by highest score
       getObj.sort((a, b) => (a.score < b.score ? 1 : -1));
       //slice top 3 scores
       let slicedObj = getObj.slice(0, 3);
-      slicedObj.forEach(function(obj) {
-        console.log(obj.name, obj.score);
+
+      //make scores table
+      let scoresTable = $(`<table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td id="name0">Mark</td>
+          <td id="score0">Otto</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td id="name1"></td>
+          <td id="score1"></td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td id="name2"></td>
+          <td id="score2"></td>
+        </tr>
+      </tbody>
+    </table> `);
+      $("#display").append($("<h2>High Score List</h2>"));
+
+      $("#display").append(scoresTable);
+      slicedObj.forEach(function(obj, i) {
+        // console.log(i, obj.name, obj.score);
+        console.log(slicedObj[i].name);
+        // console.log($("#name0").text);
+        let objName = document.querySelector(`#name${i}`);
+        let objScore = document.querySelector(`#score${i}`);
+        // console.log(objName.textContent);
+        objName.textContent = slicedObj[i].name;
+        objScore.textContent = slicedObj[i].score;
       });
     } else {
       //No scores to display
@@ -100,6 +138,7 @@ $(document).ready(function() {
       $(noScores).text("No scores to display!");
       $("#display").append(noScores);
     }
+    //add play button
     let playButton = $("<button>");
     let rowDiv = $("<div>");
     $(rowDiv).addClass("row");
