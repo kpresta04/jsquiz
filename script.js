@@ -173,13 +173,13 @@ $(document).ready(function() {
     let initials = document.querySelector("#initials").value;
     if (initials !== "") {
       console.log(initials);
+      let scoreObj = {
+        name: initials,
+        score: score
+      };
+      scoreArray.push(scoreObj);
+      localStorage.setItem("storeObj", JSON.stringify(scoreArray));
     }
-
-    let scoreObj = {
-      name: initials,
-      score: score
-    };
-    localStorage.setItem("storeObj", JSON.stringify(scoreObj));
   }
   function stopTimer() {
     clearInterval(interv);
@@ -196,7 +196,7 @@ $(document).ready(function() {
 
   //   console.log(questions);
   $("#start-button").on("click", startGame);
-
+  let scoreArray = [];
   let questionNumber = 0;
   let score = 0;
   let correctAnswers = 0;
