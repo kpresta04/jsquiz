@@ -77,7 +77,19 @@ const questions = [
 
 $(document).ready(function() {
   let disp = document.querySelector("#timer");
-  let myStorage = window.localStorage;
+  $("#store-button").on("click", storeScore);
+
+  $("#hsView").on("click", viewHighScores);
+
+  function viewHighScores() {
+    let getObj = JSON.parse(localStorage.getItem("storeObj"));
+    console.log(getObj);
+    if (getObj !== null) {
+      getObj.forEach(function(obj) {
+        console.log(obj.name, obj.score);
+      });
+    }
+  }
   var Clock = {
     Timer: function(duration, display) {
       var start = Date.now(),
@@ -167,17 +179,32 @@ $(document).ready(function() {
     $(playButton).text("Play again");
     $("#display").append(playButton);
     $(playButton).on("click", startGame);
-    $("#store-button").on("click", storeScore);
   }
   function storeScore() {
     let initials = document.querySelector("#initials").value;
     if (initials !== "") {
-      console.log(initials);
-      let scoreObj = {
+      let getObj = JSON.parse(localStorage.getItem("storeObj"));
+      console.log(getObj);
+      if (getObj !== null) {
+        console.log(getObj);
+        scoreArray = getObj;
+
+        // getObj.forEach(function(obj) {
+        //   console.log(obj.name, obj.score);
+        // });
+      }
+      //empty the score object to prevent duplicates being stored
+
+      let scoreObj = {};
+
+      scoreObj = {
         name: initials,
         score: score
       };
+
+      console.log(scoreObj);
       scoreArray.push(scoreObj);
+      console.log(scoreArray);
       localStorage.setItem("storeObj", JSON.stringify(scoreArray));
     }
   }
@@ -196,7 +223,10 @@ $(document).ready(function() {
 
   //   console.log(questions);
   $("#start-button").on("click", startGame);
+  // let getObj = JSON.parse(localStorage.getItem("storeObj"));
+
   let scoreArray = [];
+  // scoreArray.push(getObj);
   let questionNumber = 0;
   let score = 0;
   let correctAnswers = 0;
