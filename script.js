@@ -83,7 +83,7 @@ $(document).ready(function() {
   function viewHighScores() {
     stopTimer();
     $("#timer").empty();
-    $("#bottomRow").empty();
+    $("#hrFormRow").empty();
     $("#display").empty();
 
     let getObj = JSON.parse(localStorage.getItem("storeObj"));
