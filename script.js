@@ -87,7 +87,7 @@ $(document).ready(function() {
     $("#display").empty();
 
     let getObj = JSON.parse(localStorage.getItem("storeObj"));
-    console.log(getObj);
+    // console.log(getObj);
     if (getObj !== null) {
       //if scores exist,
       //sort scores by highest score
@@ -127,7 +127,7 @@ $(document).ready(function() {
       $("#display").append(scoresTable);
       slicedObj.forEach(function(obj, i) {
         // console.log(i, obj.name, obj.score);
-        console.log(slicedObj[i].name);
+        // console.log(slicedObj[i].name);
         // console.log($("#name0").text);
         let objName = document.querySelector(`#name${i}`);
         let objScore = document.querySelector(`#score${i}`);
@@ -259,7 +259,7 @@ $(document).ready(function() {
     if (initials !== "") {
       let getObj = JSON.parse(localStorage.getItem("storeObj"));
       if (getObj !== null) {
-        console.log(getObj);
+        // console.log(getObj);
         scoreArray = getObj;
       }
       //empty the score object to prevent duplicates being stored
@@ -337,7 +337,7 @@ $(document).ready(function() {
 
       $("#display").append(rowDiv);
     });
-    console.log(`Question number: ${round + 1}`);
+    // console.log(`Question number: ${round + 1}`);
   }
 
   function startGame() {
@@ -367,7 +367,7 @@ $(document).ready(function() {
   function showAnswer(bool) {
     //Announces to user whether their choice was right or wrong
     if (bool === true) {
-      console.log("Correct");
+      // console.log("Correct");
       // $("#bottomRow").empty();
       $("#announce").text("Correct!");
       setTimeout(function() {
@@ -389,7 +389,7 @@ $(document).ready(function() {
       showAnswer(true);
       score += answerPoints;
       correctAnswers++;
-      console.log(`Score is: ${score}`);
+      // console.log(`Score is: ${score}`);
       if (questionNumber < questions.length - 1) {
         questionNumber++;
         generateQuestion(questionNumber);
@@ -406,7 +406,7 @@ $(document).ready(function() {
         if (timeValue < 0) {
           onCompletion();
         } else {
-          console.log(timeValue);
+          // console.log(timeValue);
           stopTimer();
           startTimer();
         }
